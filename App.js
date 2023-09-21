@@ -1,42 +1,33 @@
-import { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
-export default function App() {
+import { NavigationContainer } from "@react-navigation/native";
+import {createNativeStackNavigator} from '@react-navigation/native-stack'
+import react from "react";
+import HomeScreen from "./HomeScreen";
+import SecondScreen from "./SecondScreen";
 
-    const [euros, setEuros] = useState('')
-    const [krona, setKrona] = useState(0)
-    const calculate = () => {
+
+export default function app() {
   
-      const result = euros.replace(',','.') * 11.85
-      setKrona(result)
-    }
-  
-    return (
-      <View style={styles.container}>
-        <Text style={styles.field}>Euros</Text>
-        <TextInput
-         placeholder='Enter Money'
-         keyboardType='decimal-pad'
-         value={euros}
-         onChangeText={text => setEuros(text)}
-         style={styles.field}
-         />
-         <Text style={styles.field}>Krona</Text>
-         <Text style={styles.field}>{krona.toFixed(2)}</Text>
-         <Button title='Calculate' onPress={calculate}/>
-       
-      </View>
+    const Stack = createNativeStackNavigator();
+
+    return(
+       <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+        name="Home" 
+        component={HomeScreen}
+        option={{
+            title: 'Home',
+            headerTitle: 'Home',
+        }}/>
+        <Stack.Screen
+        name="Second"
+        component={SecondScreen}
+        option={{
+            title:'Second',
+            headerTitle:'Second',
+        }}
+        />
+        </Stack.Navigator>
+       </NavigationContainer>
     );
-  }
-  
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      marginTop:50,
-      marginLeft:10,
-      marginRight:10,
-  
-    },
-    field:{
-      marginBottom:10,
-    }
-  });
+}
